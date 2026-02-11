@@ -23,9 +23,19 @@ public class ExampleStream {
         namesStream2.forEach(System.out::println);
 
         List<String> namesList = List.of("Alice", "Bob", "Charlie", "David", "Eve");
+        System.out.println("List of names: " + namesList);
         namesList.stream()
                 .filter(name -> name.length() > 3).map(n -> n.toUpperCase())
                 .forEach(System.out::println);
+
+
+        Stream<String> namesStream3 = Stream.of("Alice", "Bob", "Charlie", "David", "Eve");
+        // namesStream3.forEach(System.out::println);
+
+
+        List<String> namesList2 = namesStream3.toList(); 
+        System.out.println(namesList2); 
+
 
     }
 }
