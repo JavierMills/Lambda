@@ -75,19 +75,29 @@ public class Main {
 
 
 
-        Map<String, Double> productMap = products.stream()
-                .collect(Collectors.toMap(
-                        productDTO -> productDTO.name(), // Clave: el nombre del producto
-                        productDTO -> productDTO.price())); // Valor: el precio del producto
-        System.out.println("Mapa de productos: " + productMap);
+        // Map<String, Double> productMap = products.stream()
+        //         .collect(Collectors.toMap(
+        //                 productDTO -> productDTO.name(), // Clave: el nombre del producto
+        //                 productDTO -> productDTO.price(); // Valor: el precio del producto
+        // System.out.println("Mapa de productos: " + productMap);
 
 
 
          Map<String, Double> productMapLambda = products.stream()
                 .collect(Collectors.toMap(
                         ProductDTO::name, // Clave: el nombre del producto
-                        ProductDTO::price)); // Valor: el precio del producto
+                        ProductDTO::price, // Valor: el precio del producto
+                        (old, newVal) -> old)); // En caso de clave duplicada, se mantiene el valor antiguo
+
         System.out.println("Mapa de productos: " + productMapLambda);
+
+
+        List<ProductDTO> productList = productMapLambda.entrySet().stream()
+                .filter(e -> e.getValue() > 300)
+                 // Filtra las entradas del mapa por precio mayor a 300
+                .map(e -> new ProductDTO(e.getKey(), e.getValue())) // Convierte cada entrada del mapa en un ProductDTO
+                .collect(Collectors.toList()); // Recopila los productos en una nueva lista
+        System.out.println("Lista de productos con precio mayor a 300: " + productList);
 
 
 
